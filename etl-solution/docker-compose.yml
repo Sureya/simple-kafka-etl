@@ -1,0 +1,32 @@
+version: '3'
+services:
+  psql_service:
+    image: postgres
+    env_file:
+      - envs/datatbase.env
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+
+  processor:
+    build: processor
+    env_file:
+      - envs/kafka.env
+      - envs/datatbase.env
+    depends_on:
+      - psql_service
+
+  extractor:
+    build: extractor
+    env_file:
+      - envs/kafka.env
+    ports:
+      - "9558:9558"
+    depends_on:
+      - processor
+
+volumes:
+  database-data:

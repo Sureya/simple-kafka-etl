@@ -1,0 +1,111 @@
+{
+    "description": "Schema of payload the service must support",
+    "required": [
+        "vehicle",
+        "fullname",
+        "address",
+        "currency",
+        "total_cost",
+        "estimate"
+    ],
+    "properties": {
+        "vehicle": {
+            "description": "This will always be a comma separated list of Vehicle => Brand,Vehicle Model,Vehicle Year",
+            "examples": [
+                "Honda,CIVIC,2020"
+            ]
+        },
+        "fullname": {
+            "description": "The policy holder full name.",
+            "examples": [
+                "Bob the sponge"
+            ]
+        },
+        "address": {
+            "description": "Comma separated list: address,post => code,city,state,country",
+            "examples": [
+                "3 Old St., 12345, London,,UK"
+            ]
+        },
+        "currency": {
+            "description": "Alpha 3 code representing currency.",
+            "examples": [
+                "gbp"
+            ]
+        },
+        "time_of_accident": {
+            "description": "Date and time the accident happened in the following => format: %m-%d-%Y %H:%M:%S",
+            "examples": [
+                "03-19-2020 15:10:07"
+            ]
+        },
+        "total_cost": {
+            "description": "Total cost of bodyshop estimate.",
+            "type": "number"
+        },
+        "estimate": {
+            "description": "Each element is an estimate of a single operation on a => part of the car",
+            "items": {
+                "examples": [
+                    {
+                        "panel": "FRONT LEFT WING",
+                        "cost": 15.99,
+                        "operation": "REPAIR"
+                    }
+                ]
+            },
+            "properties": {
+                "panel": {
+                    "type": "string",
+                    "oneOf": [
+                        {
+                            "type" : "object",
+                            "properties" : {
+                                "type" : { "enum" : ["FRONT LEFT WING"] }
+                            }
+                        },
+                        {
+                            "type" : "object",
+                            "properties" : {
+                                "type" : { "enum" : ["FRONT RIGHT WING"] }
+                            }
+                        },
+                        {
+                            "type" : "object",
+                            "properties" : {
+                                "type" : { "enum" : ["FRONT BUMPER"] }
+                            }
+                        },
+                        {
+                            "type" : "object",
+                            "properties" : {
+                                "type" : { "enum" : ["BONNET"] }
+                            }
+                        }
+                    ]
+                },
+                "operation": {
+                    "type": "string",
+                    "oneOf": [
+                        {
+                            "type" : "object",
+                            "properties" : {
+                                "type" : { "enum" : ["REPAIR"] }
+                            }
+                        },
+                        {
+                            "type" : "object",
+                            "properties" : {
+                                "type" : { "enum" : ["REPLACE"] }
+                            }
+                        }
+                    ]
+                },
+                "cost": {
+                    "description": "cost of the operation",
+                    "type": "number"
+                }
+            }
+        }
+    }
+}
