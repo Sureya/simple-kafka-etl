@@ -73,7 +73,7 @@ class ParseData(Resource):
             if input_record["currency"] in app.config.ALL_CURRENCIES:
                 logger.info("Everything looks great, queuing record for "
                             "persistence")
-                input_record['_id'] = uuid4().hex
+                input_record['_id'] = json_logging.get_correlation_id()
                 app.config.PRODUCER.produce(app.config.TOPIC,
                                             dumps(input_record))
                 logger.debug("record published")
