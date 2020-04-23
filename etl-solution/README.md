@@ -1,5 +1,4 @@
 ### Simple Kafka based ETL Job
-### Simple Kafka based ETL Job
 
 ### What does this application do ?
 
